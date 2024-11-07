@@ -19,11 +19,11 @@ spec:
           - containerPort: 5432
         env:
           - name: POSTGRES_DB
-            value: example
+            value: fakeshop
           - name: POSTGRES_USER
-            value: example
+            value: fakeshop
           - name: POSTGRES_PASSWORD
-            value: example
+            value: Pg1234
 ---
 apiVersion: v1
 kind: Service
@@ -42,6 +42,7 @@ kind: Deployment
 metadata:
   name: fakeshop
 spec:
+  replicas: 3
   selector:
     matchLabels:
       app: fakeshop
@@ -52,18 +53,18 @@ spec:
     spec:
       containers:
       - name: fakeshop
-        image: alvessh/fake-shop:0.01
+        image: alvessh/fake-shop:0.02
         ports:
           - containerPort: 5000
         env:
           - name: DB_HOST
             value: postgre
           - name: DB_USER
-            value: example
+            value: fakeshop
           - name: DB_PASSWORD
-            value: example
+            value: Pg1234
           - name: DB_NAME
-            value: example
+            value: fakeshop 
           - name: FLASK_APP
             value: index.py
 ---
